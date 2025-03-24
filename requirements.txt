@@ -1,0 +1,4 @@
+﻿selenium
+pandas
+openpyxl
+pyinstaller
