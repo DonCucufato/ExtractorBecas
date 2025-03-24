@@ -2,12 +2,12 @@ name: Compilar Ejecutable Windows
 
 on:
   push:
-    branches: [main]  # Rama que activará la compilación
-  workflow_dispatch:  # Permite ejecutar manualmente
+    branches: [main]
+  workflow_dispatch:
 
 jobs:
   build:
-    runs-on: windows-latest  # Usar Windows en la nube
+    runs-on: windows-latest
 
     steps:
       - name: Checkout del código
@@ -16,16 +16,20 @@ jobs:
       - name: Instalar Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'  # Versión de Python
+          python-version: '3.11.x'  # Forzar versión exacta
+          architecture: x64
 
-      - name: Instalar dependencias
+      - name: Configurar entorno virtual
         run: |
+          python -m venv venv
+          .\venv\Scripts\activate
           pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Compilar con PyInstaller
+      - name: Compilar con PyInstaller (incluyendo DLL)
         run: |
-          pyinstaller --onefile --windowed --add-data "chromedriver.exe;." ExtractorBecas.py
+          .\venv\Scripts\activate
+          pyinstaller --onefile --windowed --add-data "chromedriver.exe;." --add-binary "C:\Python311\python311.dll;." ExtractorBecas.py
 
       - name: Subir ejecutable como artefacto
         uses: actions/upload-artifact@v4
