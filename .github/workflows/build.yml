@@ -16,7 +16,7 @@ jobs:
       - name: Instalar Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11.x'
+          python-version: '3.8.x'  # Usar Python 3.8
           architecture: x64
 
       - name: Configurar entorno virtual
@@ -26,11 +26,10 @@ jobs:
           .\venv\Scripts\python.exe -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Compilar con PyInstaller (incluyendo DLL desde el root)
+      - name: Compilar con PyInstaller
         run: |
           .\venv\Scripts\activate
-          # Usar ruta relativa al archivo subido al repositorio
-          pyinstaller --onefile --windowed --add-data "chromedriver.exe;." --add-binary "python311.dll;." ExtractorBecas.py
+          pyinstaller --onefile --windowed --add-data "chromedriver.exe;." ExtractorBecas.py
 
       - name: Subir ejecutable como artefacto
         uses: actions/upload-artifact@v4
