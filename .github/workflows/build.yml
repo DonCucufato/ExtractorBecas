@@ -16,7 +16,7 @@ jobs:
       - name: Instalar Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.8.x'  # Usar Python 3.8
+          python-version: '3.8.x'  # Asegúrate de que sea 3.8
           architecture: x64
 
       - name: Configurar entorno virtual
