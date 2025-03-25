@@ -10,15 +10,18 @@ jobs:
     runs-on: windows-latest
 
     steps:
+      # Paso 1: Clonar el repositorio
       - name: Checkout del código
         uses: actions/checkout@v4
 
+      # Paso 2: Instalar Python 3.8 (compatible con Windows 7)
       - name: Instalar Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.8.x'  # Usar Python 3.8, compatible con Windows 7
           architecture: x64       # Asegúrate de que coincida con tu sistema
 
+      # Paso 3: Configurar entorno virtual e instalar dependencias
       - name: Configurar entorno virtual
         run: |
           python -m venv venv
@@ -26,18 +29,21 @@ jobs:
           .\venv\Scripts\python.exe -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      # Paso 4: Instalar Nuitka
       - name: Instalar Nuitka
         run: |
           .\venv\Scripts\activate
           pip install nuitka
 
+      # Paso 5: Compilar con Nuitka
       - name: Compilar con Nuitka
         run: |
           .\venv\Scripts\activate
           nuitka --standalone --windows-disable-console --include-data-file=chromedriver.exe=. ExtractorBecas.py
 
+      # Paso 6: Subir ejecutable como artefacto
       - name: Subir ejecutable como artefacto
         uses: actions/upload-artifact@v4
         with:
           name: Ejecutable-Windows
-          path: ExtractorBecas.dist/
+          path: dist/  # Ruta correcta donde Nuitka genera los archivos
