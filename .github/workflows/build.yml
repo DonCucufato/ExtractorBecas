@@ -16,8 +16,8 @@ jobs:
       - name: Instalar Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.8.x'  # Asegúrate de que sea 3.8
-          architecture: x64
+          python-version: '3.8.x'  # Usar Python 3.8, compatible con Windows 7
+          architecture: x64       # Asegúrate de que coincida con tu sistema (x64 o x86)
 
       - name: Configurar entorno virtual
         run: |
@@ -29,10 +29,10 @@ jobs:
       - name: Compilar con PyInstaller
         run: |
           .\venv\Scripts\activate
-          pyinstaller --onefile --windowed --add-data "chromedriver.exe;." ExtractorBecas.py
+          pyinstaller --onedir --windowed --add-data "chromedriver.exe;." --add-binary "C:/hostedtoolcache/windows/Python/3.8.10/x64/python38.dll;." ExtractorBecas.py
 
       - name: Subir ejecutable como artefacto
         uses: actions/upload-artifact@v4
         with:
           name: Ejecutable-Windows
-          path: dist/ExtractorBecas.exe
+          path: dist/ExtractorBecas/
