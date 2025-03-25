@@ -1,4 +1,4 @@
-name: Compilar Ejecutable Windows
+name: Compilar Ejecutable Windows con Nuitka
 
 on:
   push:
@@ -26,13 +26,18 @@ jobs:
           .\venv\Scripts\python.exe -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Compilar con PyInstaller
+      - name: Instalar Nuitka
         run: |
           .\venv\Scripts\activate
-          pyinstaller --onedir --windowed --add-data "chromedriver.exe;." --add-binary "C:/hostedtoolcache/windows/Python/3.8.10/x64/python38.dll;." ExtractorBecas.py
+          pip install nuitka
+
+      - name: Compilar con Nuitka
+        run: |
+          .\venv\Scripts\activate
+          nuitka --standalone --windows-disable-console --include-data-file=chromedriver.exe=. ExtractorBecas.py
 
       - name: Subir ejecutable como artefacto
         uses: actions/upload-artifact@v4
         with:
           name: Ejecutable-Windows
-          path: dist/ExtractorBecas/
+          path: ExtractorBecas.dist/
