@@ -39,7 +39,7 @@ jobs:
       - name: Compilar con Nuitka
         run: |
           .\venv\Scripts\activate
-          nuitka --standalone --windows-disable-console --include-data-file=chromedriver.exe=. ExtractorBecas.py
+          nuitka --standalone --windows-disable-console --output-dir=dist --include-data-file=chromedriver.exe=chromedriver.exe ExtractorBecas.py
 
       # Paso 6: Subir ejecutable como artefacto
       - name: Subir ejecutable como artefacto
