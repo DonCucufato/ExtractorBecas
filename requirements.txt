@@ -1,4 +1,4 @@
-﻿selenium
-pandas
-openpyxl
-pyinstaller
+selenium==4.27.1
+pandas==1.3.5
+numpy==1.21.6
+openpyxl==3.0.9
