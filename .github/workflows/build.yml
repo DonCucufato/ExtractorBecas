@@ -17,7 +17,7 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.8.x'  # Usar Python 3.8, compatible con Windows 7
-          architecture: x64       # Asegúrate de que coincida con tu sistema (x64 o x86)
+          architecture: x64       # Asegúrate de que coincida con tu sistema
 
       - name: Configurar entorno virtual
         run: |
